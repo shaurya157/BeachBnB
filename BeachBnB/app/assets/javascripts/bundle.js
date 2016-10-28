@@ -54,10 +54,25 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
+	var _session_api_util = __webpack_require__(172);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	document.addEventListener('DOMContentLoaded', function () {
 	  var root = document.getElementById('root');
+	
+	  window.signup = _session_api_util.signup;
+	  window.login = _session_api_util.login;
+	  window.logout = _session_api_util.logout;
+	  var success = function success(data) {
+	    return console.log(data);
+	  };
+	  var error = function error(data) {
+	    return console.log(data);
+	  };
+	  window.success = success;
+	  window.error = error;
+	
 	  _reactDom2.default.render(_react2.default.createElement(
 	    'h1',
 	    null,
@@ -21431,6 +21446,44 @@
 	
 	module.exports = ReactDOMNullInputValuePropHook;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 172 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var signup = exports.signup = function signup(params, success, error) {
+	  $.ajax({
+	    method: 'POST',
+	    url: 'api/users',
+	    data: { user: params },
+	    success: success,
+	    error: error
+	  });
+	};
+	
+	var login = exports.login = function login(params, success, error) {
+	  $.ajax({
+	    method: 'POST',
+	    url: 'api/session',
+	    data: { user: params },
+	    success: success,
+	    error: error
+	  });
+	};
+	
+	var logout = exports.logout = function logout(success, error) {
+	  $.ajax({
+	    method: 'DELETE',
+	    url: 'api/session',
+	    success: success,
+	    error: error
+	  });
+	};
 
 /***/ }
 /******/ ]);
