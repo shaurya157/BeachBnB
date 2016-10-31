@@ -1,19 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {signup, login, logout} from './actions/session_actions';
 import configureStore from './store/store';
+import Root from './components/root';
+import {login} from './actions/session_actions';
 
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('root');
-  const store = configureStore();
-  window.store = store;
-  window.signup = signup;
-  window.login = login;
-  window.logout = logout;
-  const success = (data) => console.log(data);
-  const error = (data) => console.log(data);
-  window.success = success;
-  window.error = error;
+  let store;
 
-  ReactDOM.render(<h1>Hello</h1>, root);
+  if(window.currentUser){
+    store = configureStore({session: {currentUser: window.currentUser}});
+  } else {
+    store = configureStore();
+  }
+
+  window.store = store;
+  window.login = login;
+
+  ReactDOM.render(<Root store={store} />, root);
 });
